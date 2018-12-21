@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-typescript",
-  "version": "0.1.0-semantic-release",
+  "version": "0.0.0-development",
   "main": "dist/src/index.js",
   "files": [
     "dist",
@@ -13,11 +13,12 @@
     "build": "rm -rf dist && tsc",
     "pretest": "npm run lint",
     "test": "jest",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eletype/serverless-plugin-typescript.git"
+    "url": "https://github.com/eletype/serverless-plugin-typescript.git"
   },
   "keywords": [
     "serverless",
@@ -27,12 +28,13 @@
   ],
   "devDependencies": {
     "@types/fs-extra": "5.0.0",
-    "@types/jest": "22.0.1",
+    "@types/jest": "23.3.10",
     "@types/lodash": "4.14.91",
-    "jest": "22.0.4",
+    "jest": "23.6.0",
     "mock-fs": "4.4.2",
-    "ts-jest": "22.0.1",
-    "tslint": "5.8.0"
+    "ts-jest": "23.10.5",
+    "tslint": "5.12.0",
+    "semantic-release": "^15.13.1"
   },
   "dependencies": {
     "fs-extra": "^5.0.0",

@@ -4,9 +4,10 @@
     "rootDir": ".",
     "target": "es6",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "allowJs": false
   },
   "exclude": [
-    "node_modules"
+    "./node_modules"
   ]
 }
