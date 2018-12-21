@@ -5,7 +5,7 @@ import { ServerlessFunction } from './types'
 import * as path from 'path'
 import {CreateProgramOptions} from 'typescript'
 
-export function makeDefaultTypescriptConfig() {
+export function makeDefaultTypescriptConfig(): ts.ParsedCommandLine {
   const defaultTypescriptConfig: ts.CompilerOptions = {
     preserveConstEnums: true,
     strictNullChecks: true,
@@ -16,7 +16,11 @@ export function makeDefaultTypescriptConfig() {
     rootDir: './',
   }
 
-  return defaultTypescriptConfig
+  return {
+        fileNames: [],
+        errors: [],
+        options : defaultTypescriptConfig,
+    }
 }
 
 export function extractFileNames(cwd: string, provider: string, functions?: { [key: string]: ServerlessFunction }): string[] {
@@ -131,9 +135,5 @@ export function getTypescriptConfig(
     return configParseResult
   }
 
-  return {
-      fileNames: [],
-      errors: [],
-      options : makeDefaultTypescriptConfig(),
-  }
+  return makeDefaultTypescriptConfig()
 }
