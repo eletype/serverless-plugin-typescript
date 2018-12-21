@@ -3,6 +3,7 @@ import * as fs from 'fs-extra'
 import * as _ from 'lodash'
 import { ServerlessFunction } from './types'
 import * as path from 'path'
+import {CreateProgramOptions} from 'typescript'
 
 export function makeDefaultTypescriptConfig() {
   const defaultTypescriptConfig: ts.CompilerOptions = {
@@ -57,7 +58,8 @@ export function extractFileNames(cwd: string, provider: string, functions?: { [k
     })
 }
 
-export async function run(fileNames: string[], options: ts.CompilerOptions): Promise<string[]> {
+export async function run(fileNames: string[], tsconfig: ts.ParsedCommandLine): Promise<string[]> {
+  const options = tsconfig.options
   options.listEmittedFiles = true
   const program = ts.createProgram(fileNames, options)
 
@@ -100,7 +102,7 @@ export function getSourceFiles(
 export function getTypescriptConfig(
   cwd: string,
   logger?: { log: (str: string) => void }
-): ts.CompilerOptions {
+): ts.ParsedCommandLine {
   const configFilePath = path.join(cwd, 'tsconfig.json')
 
   if (fs.existsSync(configFilePath)) {
@@ -126,8 +128,12 @@ export function getTypescriptConfig(
     }
     configParseResult.options.rootDir = cwd
 
-    return configParseResult.options
+    return configParseResult
   }
 
-  return makeDefaultTypescriptConfig()
+  return {
+      fileNames: [],
+      errors: [],
+      options : makeDefaultTypescriptConfig(),
+  }
 }

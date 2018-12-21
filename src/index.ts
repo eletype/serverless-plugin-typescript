@@ -127,9 +127,9 @@ export class TypeScriptPlugin {
       this.isWatching ? null : this.serverless.cli
     )
 
-    tsconfig.outDir = buildFolder
-
-    const emitedFiles = await typescript.run(this.rootFileNames, tsconfig)
+    tsconfig.options.outDir = buildFolder
+    const fileNames = tsconfig.fileNames.length ? tsconfig.fileNames : this.rootFileNames
+    const emitedFiles = await typescript.run(fileNames, tsconfig)
     await this.copyExtras()
     this.serverless.cli.log('Typescript compiled.')
     return emitedFiles
